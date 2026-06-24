@@ -1,4 +1,4 @@
-import { connectToDatabase } from '../db';
+import { connectToDatabase } from '../config/database';
 import { Activity } from '../models/activity';
 import { LeaderboardEntry } from '../models/leaderboard';
 import { Team } from '../models/team';

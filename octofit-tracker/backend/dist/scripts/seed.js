@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const db_1 = require("../db");
+const database_1 = require("../config/database");
 const activity_1 = require("../models/activity");
 const leaderboard_1 = require("../models/leaderboard");
 const team_1 = require("../models/team");
@@ -8,7 +8,7 @@ const user_1 = require("../models/user");
 const workout_1 = require("../models/workout");
 async function seed() {
     console.log('Seed the octofit_db database with test data');
-    await (0, db_1.connectToDatabase)();
+    await (0, database_1.connectToDatabase)();
     await Promise.all([
         user_1.User.deleteMany({}),
         team_1.Team.deleteMany({}),
