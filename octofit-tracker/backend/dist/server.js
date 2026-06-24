@@ -12,6 +12,10 @@ const db_1 = require("./db");
 const healthCheck_1 = require("./models/healthCheck");
 const routes_1 = __importDefault(require("./routes"));
 const config_1 = require("./config");
+const codespaceName = process.env.CODESPACE_NAME;
+const codespacesUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000';
 dotenv_1.default.config();
 exports.app = (0, express_1.default)();
 const port = Number(process.env.PORT || 8000);
@@ -29,7 +33,7 @@ exports.app.get('/api/health', async (_req, res) => {
     }
 });
 exports.app.get('/api/base-url', (_req, res) => {
-    res.json({ apiBaseUrl: config_1.apiBaseUrl });
+    res.json({ apiBaseUrl: config_1.apiBaseUrl, codespacesUrl });
 });
 exports.app.use('/api', routes_1.default);
 async function startServer() {
@@ -37,5 +41,6 @@ async function startServer() {
     return exports.app.listen(port, host, () => {
         console.log(`Server listening on http://${host}:${port}`);
         console.log(`API base URL: ${config_1.apiBaseUrl}`);
+        console.log(`Codespaces URL: ${codespacesUrl}`);
     });
 }

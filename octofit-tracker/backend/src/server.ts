@@ -6,6 +6,11 @@ import { HealthCheck } from './models/healthCheck';
 import apiRoutes from './routes';
 import { apiBaseUrl } from './config';
 
+const codespaceName = process.env.CODESPACE_NAME;
+const codespacesUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : 'http://localhost:8000';
+
 dotenv.config();
 
 export const app = express();
@@ -26,7 +31,7 @@ app.get('/api/health', async (_req, res) => {
 });
 
 app.get('/api/base-url', (_req, res) => {
-  res.json({ apiBaseUrl });
+  res.json({ apiBaseUrl, codespacesUrl });
 });
 
 app.use('/api', apiRoutes);
@@ -36,5 +41,6 @@ export async function startServer() {
   return app.listen(port, host, () => {
     console.log(`Server listening on http://${host}:${port}`);
     console.log(`API base URL: ${apiBaseUrl}`);
+    console.log(`Codespaces URL: ${codespacesUrl}`);
   });
 }
