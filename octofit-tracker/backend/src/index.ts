@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectToDatabase } from './db';
 import { HealthCheck } from './models/healthCheck';
+import apiRoutes from './routes';
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.get('/api/health', async (_req, res) => {
     res.status(500).json({ status: 'error', message: 'Database connection failed' });
   }
 });
+
+app.use('/api', apiRoutes);
 
 async function startServer() {
   await connectToDatabase();

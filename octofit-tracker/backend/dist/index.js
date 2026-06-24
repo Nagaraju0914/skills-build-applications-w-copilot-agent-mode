@@ -8,6 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const db_1 = require("./db");
 const healthCheck_1 = require("./models/healthCheck");
+const routes_1 = __importDefault(require("./routes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
@@ -23,6 +24,7 @@ app.get('/api/health', async (_req, res) => {
         res.status(500).json({ status: 'error', message: 'Database connection failed' });
     }
 });
+app.use('/api', routes_1.default);
 async function startServer() {
     await (0, db_1.connectToDatabase)();
     app.listen(port, () => {
